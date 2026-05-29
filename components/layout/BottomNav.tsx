@@ -3,25 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { CalendarDays, Plus, Settings } from "lucide-react";
+import { CalendarDays, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// ─────────────────────────────────────────────
-// NAVEGACIÓN
-// ─────────────────────────────────────────────
-
-const NAV_ITEMS = [
-  {
-    href: "/home",
-    icon: CalendarDays,
-    label: "Inicio",
-  },
-  {
-    href: "/settings",
-    icon: Settings,
-    label: "Ajustes",
-  },
-];
 
 interface BottomNavProps {
   onCreateEvent?: () => void;
@@ -31,49 +14,34 @@ export function BottomNav({ onCreateEvent }: BottomNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-30 safe-bottom">
-      {/* Blur backdrop */}
-      <div className="absolute inset-0 bg-surface/80 backdrop-blur-md border-t border-default" />
-
+    <div className="fixed bottom-0 inset-x-0 z-30 safe-bottom">
+      <div className="absolute inset-0 bg-white/80 backdrop-blur-md border-t border-gray-200" />
       <div className="relative flex items-center justify-around px-6 py-2">
-        {/* Home */}
         <NavItem
-          href={NAV_ITEMS[0].href}
-          icon={<NAV_ITEMS[0].icon size={22} />}
-          label={NAV_ITEMS[0].label}
-          isActive={pathname === NAV_ITEMS[0].href || pathname.startsWith("/home")}
+          href="/home"
+          icon={<CalendarDays size={22} />}
+          label="Inicio"
+          isActive={pathname === "/home" || pathname.startsWith("/home")}
         />
-
-        {/* FAB — Crear evento */}
         <motion.button
           onClick={onCreateEvent}
           whileTap={{ scale: 0.9 }}
           transition={{ duration: 0.1 }}
-          className={cn(
-            "w-14 h-14 rounded-2xl bg-[var(--blue)] text-white",
-            "flex items-center justify-center shadow-float",
-            "-mt-6"
-          )}
+          className="w-14 h-14 rounded-2xl bg-blue-500 text-white flex items-center justify-center shadow-lg -mt-6"
           aria-label="Crear evento"
         >
-          <Plus size={26} strokeWidth={2.5} />
+          <span className="text-2xl font-light">+</span>
         </motion.button>
-
-        {/* Settings */}
         <NavItem
-          href={NAV_ITEMS[1].href}
-          icon={<NAV_ITEMS[1].icon size={22} />}
-          label={NAV_ITEMS[1].label}
+          href="/settings"
+          icon={<Settings size={22} />}
+          label="Ajustes"
           isActive={pathname.startsWith("/settings")}
         />
       </div>
-    </nav>
+    </div>
   );
 }
-
-// ─────────────────────────────────────────────
-// NAV ITEM
-// ─────────────────────────────────────────────
 
 interface NavItemProps {
   href: string;
@@ -84,28 +52,18 @@ interface NavItemProps {
 
 function NavItem({ href, icon, label, isActive }: NavItemProps) {
   return (
-    <Link
-      href={href}
-      className="flex flex-col items-center gap-1 min-w-[56px] py-1"
-    >
+    <Link href={href} className="flex flex-col items-center gap-1 min-w-[56px] py-1">
       <motion.div
         whileTap={{ scale: 0.85 }}
         transition={{ duration: 0.1 }}
         className={cn(
           "flex items-center justify-center w-10 h-10 rounded-xl transition-colors",
-          isActive
-            ? "bg-[var(--blue)]/10 text-[var(--blue)]"
-            : "text-muted"
+          isActive ? "bg-blue-50 text-blue-500" : "text-gray-400"
         )}
       >
         {icon}
       </motion.div>
-      <span
-        className={cn(
-          "text-[10px] font-medium transition-colors",
-          isActive ? "text-[var(--blue)]" : "text-muted"
-        )}
-      >
+      <span className={cn("text-[10px] font-medium", isActive ? "text-blue-500" : "text-gray-400")}>
         {label}
       </span>
     </Link>
