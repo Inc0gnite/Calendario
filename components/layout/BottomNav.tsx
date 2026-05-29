@@ -1,18 +1,18 @@
 "use client";
-
+ 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { CalendarDays, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
-
+ 
 interface BottomNavProps {
   onCreateEvent?: () => void;
 }
-
+ 
 export function BottomNav({ onCreateEvent }: BottomNavProps) {
   const pathname = usePathname();
-
+ 
   return (
     <div className="fixed bottom-0 inset-x-0 z-30 safe-bottom">
       <div className="absolute inset-0 bg-white/80 backdrop-blur-md border-t border-gray-200" />
@@ -42,14 +42,14 @@ export function BottomNav({ onCreateEvent }: BottomNavProps) {
     </div>
   );
 }
-
+ 
 interface NavItemProps {
   href: string;
   icon: React.ReactNode;
   label: string;
   isActive: boolean;
 }
-
+ 
 function NavItem({ href, icon, label, isActive }: NavItemProps) {
   return (
     <Link href={href} className="flex flex-col items-center gap-1 min-w-[56px] py-1">
@@ -69,3 +69,4 @@ function NavItem({ href, icon, label, isActive }: NavItemProps) {
     </Link>
   );
 }
+ 
