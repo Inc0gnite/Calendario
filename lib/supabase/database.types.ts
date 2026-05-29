@@ -162,8 +162,13 @@ export interface Database {
           created_at?: string;
         };
         Update: {
+          id?: string;
+          event_id?: string;
+          offset_type?: "same_day" | "1_day_before" | "1_week_before" | "1_month_before";
+          scheduled_for?: string;
           sent?: boolean;
           sent_at?: string | null;
+          created_at?: string;
         };
       };
 
