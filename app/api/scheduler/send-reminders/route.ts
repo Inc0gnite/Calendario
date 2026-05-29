@@ -107,7 +107,7 @@ export async function POST(request: Request) {
       if (ok) sentCount++;
     }
 
-    await supabase
+    await (supabase as any)
       .from("reminders")
       .update({ sent: true, sent_at: new Date().toISOString() })
       .in("id", reminderIds);
